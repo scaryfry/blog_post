@@ -1,111 +1,73 @@
-document.addEventListener("DOMContentLoaded", () => {
-  fetchPosts();
+const API_URL = "http://localhost:3000/blogs";
 
-  const blogForm = document.getElementById("blogForm");
+async function fetchBlogs() {
+    const response = await fetch(API_URL);
+    const data = await response.json();
+    const tbody = document.querySelector("#blogs tbody");
 
-  // Form submit event to create a new blog post
-  blogForm.addEventListener("submit", async (e) => {
+    tbody.innerHTML = ""; 
+    data.forEach(row => {
+        const id = row.id || "N/A";
+        const author = row.author || "Unknown";
+        const title = row.title || "Untitled";
+        const category = row.category || "Unknown";
+        const content = row.content || "Unknown";
+        const created_at = row.created_at ? new Date(row.created_at).toLocaleString() : "N/A";
+        const updated_at = row.updated_at ? new Date(row.updated_at).toLocaleString() : "N/A";
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${id}</td>
+            <td>${author}</td>
+            <td>${title}</td>
+            <td>${category}</td>
+            <td>${content}</td>
+            <td>${created_at}</td>
+            <td>${updated_at}</td>
+            <td>
+                <a onclick="updateBlog(${id})"><div>Update</div></a>
+                <a onclick="deleteBlog(${id})"><div>Delete</div></a>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+async function updateBlog(id) {
+    const author = prompt("Enter new author:");
+    const title = prompt("Enter new title:");
+    const category = prompt("Enter new category:");
+    const content = prompt("Enter new content:");
+    if (author && title && category && content) {
+        await fetch(`${API_URL}/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ author, title, category, content })
+        });
+        fetchBlogs();
+    }
+}
+async function deleteBlog(id) {
+    await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+    fetchBlogs();
+}
+
+document.querySelector("#addBlogForm").addEventListener("submit", async (e) => {
     e.preventDefault();
-    const title = document.getElementById("title").value;
-    const author = document.getElementById("author").value;
-    const category = document.getElementById("category").value;
-    const content = document.getElementById("content").value;
-
-    const postData = { title, author, category, content };
-    try {
-      const res = await fetch("/blogs", {
+    const author = document.querySelector("#author").value;
+    const title = document.querySelector("#title").value;
+    const category = document.querySelector("#category").value;
+    const content = document.querySelector("#content").value;
+    if (!author || !title || !category || !content) {
+        alert("All fields are required!");
+        return;
+    }
+    await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(postData),
-      });
-
-      const newPost = await res.json();
-      if (res.status === 201) {
-        alert("Blog poszt sikeresen létrehozva!");
-        fetchPosts();
-        blogForm.reset();
-      } else {
-        alert("Hiba történt: " + newPost.message);
-      }
-    } catch (error) {
-      alert("Hiba történt: " + error);
-    }
-  });
+        body: JSON.stringify({ author, title, category, content })
+    });
+    fetchBlogs();
 });
-
-// Fetch all blog posts
-async function fetchPosts() {
-  try {
-    const res = await fetch("/blogs");
-    const posts = await res.json();
-
-    const postsContainer = document.getElementById("postsContainer");
-    postsContainer.innerHTML = ""; // Reset posts
-
-    posts.forEach((post) => {
-      const postElement = document.createElement("div");
-      postElement.className = "post";
-      postElement.innerHTML = `
-        <h3>${post.title}</h3>
-        <p><strong>Szerző:</strong> ${post.author}</p>
-        <p><strong>Kategória:</strong> ${post.category}</p>
-        <p>${post.content}</p>
-        <p><small><strong>Created at:</strong> ${post.created_at}</small></p>
-        <button onclick="editPost(${post.id})">Szerkesztés</button>
-        <button onclick="deletePost(${post.id})">Törlés</button>
-      `;
-      postsContainer.appendChild(postElement);
-    });
-  } catch (error) {
-    console.error("Hiba történt a posztok lekérdezésekor:", error);
-  }
-}
-
-// Edit post function
-async function editPost(id) {
-  const title = prompt("Új cím:");
-  const author = prompt("Új szerző:");
-  const category = prompt("Új kategória:");
-  const content = prompt("Új tartalom:");
-
-  const updatedData = { title, author, category, content };
-
-  try {
-    const res = await fetch(`/blogs/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedData),
-    });
-
-    const updatedPost = await res.json();
-    if (res.status === 200) {
-      alert("Poszt sikeresen frissítve!");
-      fetchPosts();
-    } else {
-      alert("Hiba történt a poszt frissítésekor.");
-    }
-  } catch (error) {
-    alert("Hiba történt: " + error);
-  }
-}
-
-// Delete post function
-async function deletePost(id) {
-  if (confirm("Biztosan törlöd ezt a posztot?")) {
-    try {
-      const res = await fetch(`/blogs/${id}`, {
-        method: "DELETE",
-      });
-
-      const response = await res.json();
-      if (res.status === 200) {
-        alert(response.message);
-        fetchPosts();
-      } else {
-        alert("Hiba történt a poszt törlésénél.");
-      }
-    } catch (error) {
-      alert("Hiba történt: " + error);
-    }
-  }
-}
+document.addEventListener("DOMContentLoaded", () => {
+    fetchBlogs();
+});
