@@ -21,6 +21,7 @@
                 <th>Content</th>
                 <th>Creation date</th>
                 <th>Last update</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -29,16 +30,11 @@
     
     <h2>Add Blog</h2>
     <form id="addBlogForm">
-        <input type="text" id="author" placeholder="Author" required>
+        <select id="author" required>
         <input type="text" id="title" placeholder="Title" required>
         <input type="text" id="category" placeholder="Category" required>
-        <textarea id="content" placeholder="Content" required></textarea>
-        <input type="date" id="creationDate" required>
+        <input type="text" id="content" placeholder="Content" required>
         <button type="submit">Post Blog</button>
     </form>
-
-    <h2>Show Blog</h2>
-    <div id="showblog">
-    </div>
 </body>
 </html>

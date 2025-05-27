@@ -4,6 +4,18 @@ async function fetchBlogs() {
     const response = await fetch(API_URL);
     const data = await response.json();
     const tbody = document.querySelector("#blogs tbody");
+    const users = [
+        { id: 1, name: "Alice Smith" },
+        { id: 2, name: "Bob Johnson" },
+        { id: 3, name: "Charlie Brown" }
+     ];
+     const dropdown = document.getElementById("author");
+     users.forEach(user => {
+        const option = document.createElement("option");
+        option.value = user.name;
+        option.textContent = user.name;
+        dropdown.appendChild(option);
+        });
 
     tbody.innerHTML = ""; 
     data.forEach(row => {
@@ -25,8 +37,8 @@ async function fetchBlogs() {
             <td>${created_at}</td>
             <td>${updated_at}</td>
             <td>
-                <a onclick="updateBlog(${id})"><div>Update</div></a>
-                <a onclick="deleteBlog(${id})"><div>Delete</div></a>
+                <a onclick="updateBlog(${id})">Update</a>
+                <a onclick="deleteBlog(${id})">Delete</a>
         `;
         tbody.appendChild(tr);
     });

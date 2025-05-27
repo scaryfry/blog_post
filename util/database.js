@@ -28,7 +28,8 @@ export const deleteBlog = (id) => db.prepare(`DELETE FROM blogs WHERE id = ?`).r
 //     { id: 1, name: "Alice Smith" },
 //     { id: 2, name: "Bob Johnson" },
 //     { id: 3, name: "Charlie Brown" }
-// ];
+//  ];
+
 
 // createBlog(users[0].name, "Alice's First Blog", "Tech", "Content of Alice's first blog.");
 // createBlog(users[0].name, "Alice's Second Blog", "Travel", "Content of Alice's second blog.");
