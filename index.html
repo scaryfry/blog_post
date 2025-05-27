@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog Weboldal</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header>
+    <h1>Blog Weboldal</h1>
+  </header>
+
+  <div id="postsContainer"></div>
+
+  <section id="formSection">
+    <h2>Új bejegyzés</h2>
+    <form id="blogForm">
+      <input type="text" id="title" placeholder="Cím" required>
+      <input type="text" id="author" placeholder="Szerző" required>
+      <input type="text" id="category" placeholder="Kategória" required>
+      <textarea id="content" placeholder="Tartalom" required></textarea>
+      <button type="submit">Mentés</button>
+    </form>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
