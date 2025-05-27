@@ -30,11 +30,12 @@
     
     <h2>Add Blog</h2>
     <form id="addBlogForm">
-        <select id="author" required>
+        <input type="hidden" id="blogId">
+        <select id="author" required></select>
         <input type="text" id="title" placeholder="Title" required>
         <input type="text" id="category" placeholder="Category" required>
         <input type="text" id="content" placeholder="Content" required>
         <button type="submit">Post Blog</button>
-    </form>
+    </form>    
 </body>
 </html>
