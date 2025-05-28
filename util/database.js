@@ -24,16 +24,16 @@ export const updateBlog = (id, author, title, category, content) =>
     ).run(author, title, category, content, id);
 export const deleteBlog = (id) => db.prepare(`DELETE FROM blogs WHERE id = ?`).run(id)
 
-// const users = [
-//     { id: 1, name: "Alice Smith" },
-//     { id: 2, name: "Bob Johnson" },
-//     { id: 3, name: "Charlie Brown" }
-//  ];
+const users = [
+    { id: 1, name: "Alice Smith" },
+    { id: 2, name: "Bob Johnson" },
+    { id: 3, name: "Charlie Brown" }
+ ];
 
 
-// createBlog(users[0].name, "Alice's First Blog", "Tech", "Content of Alice's first blog.");
-// createBlog(users[0].name, "Alice's Second Blog", "Travel", "Content of Alice's second blog.");
-// createBlog(users[1].name, "Bob's First Blog", "Food", "Content of Bob's first blog.");
-// createBlog(users[1].name, "Bob's Second Blog", "Music", "Content of Bob's second blog.");
-// createBlog(users[2].name, "Charlie's First Blog", "Sports", "Content of Charlie's first blog.");
-// createBlog(users[2].name, "Charlie's Second Blog", "Art", "Content of Charlie's second blog.");
+createBlog(users[0].name, "Alice's First Blog", "Tech", "Content of Alice's first blog.");
+createBlog(users[0].name, "Alice's Second Blog", "Travel", "Content of Alice's second blog.");
+createBlog(users[1].name, "Bob's First Blog", "Food", "Content of Bob's first blog.");
+createBlog(users[1].name, "Bob's Second Blog", "Music", "Content of Bob's second blog.");
+createBlog(users[2].name, "Charlie's First Blog", "Sports", "Content of Charlie's first blog.");
+createBlog(users[2].name, "Charlie's Second Blog", "Art", "Content of Charlie's second blog.");

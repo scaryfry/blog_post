@@ -21,7 +21,6 @@ async function fetchBlogs() {
         });
     }
 
-    // Clear and repopulate table
     tbody.innerHTML = "";
     data.forEach(blog => {
         const { id, author, title, category, content, created_at, updated_at } = blog;
